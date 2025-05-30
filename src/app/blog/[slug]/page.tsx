@@ -178,8 +178,43 @@ export default async function BlogPostPage({ params }: PageProps) {
     notFound();
   }
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": post.image,
+    "datePublished": post.date,
+    "dateModified": post.date,
+    "author": {
+      "@type": "Person",
+      "name": post.author.name,
+      "image": post.author.image,
+      "description": post.author.bio
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "オートウェビナー大学CLAN",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://your-domain.com/images/logo.webp"
+      }
+    },
+    "articleSection": post.category,
+    "wordCount": post.content.length,
+    "keywords": post.tags.join(", "),
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://your-domain.com/blog/${post.slug}`
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <Header />
       
       <main className="pt-16">

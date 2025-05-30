@@ -1,6 +1,7 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // Blog post data - In a real app, this would come from a CMS or API
 const blogPosts = [
@@ -114,10 +115,14 @@ export default function BlogPage() {
               {blogPosts.map((post) => (
                 <article key={post.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                   <div className="aspect-video bg-gray-200 overflow-hidden">
-                    <img
+                    <Image
                       src={post.image}
                       alt={post.title}
+                      width={600}
+                      height={400}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                      priority={false}
                     />
                   </div>
                   

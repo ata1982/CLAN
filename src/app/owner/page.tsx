@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "運営者情報 | オートウェビナー大学",
@@ -25,9 +26,11 @@ export default function OwnerPage() {
           padding: '36px 24px 32px 24px',
           textAlign: 'center'
         }}>
-          <img 
-            src="/assets/images/profile-owner.webp" 
+          <Image 
+            src="/images/profile-owner.webp" 
             alt="前田由紀子 プロフィール写真"
+            width={120}
+            height={120}
             style={{
               width: '120px',
               height: '120px',
@@ -40,6 +43,7 @@ export default function OwnerPage() {
               background: '#f8f9fa'
             }}
             loading="lazy"
+            priority={false}
           />
           <div style={{
             fontSize: '1.3rem',

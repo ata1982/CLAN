@@ -2,9 +2,52 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/HeroSection';
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "オートウェビナー大学CLAN",
+  "alternateName": "CLAN",
+  "url": "https://your-domain.com",
+  "logo": "https://your-domain.com/images/logo.webp",
+  "description": "マーケティング自動化とオートウェビナー構築でビジネスを加速させるオンラインスクール",
+  "foundingDate": "2011",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "JP"
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "前田 由紀子",
+    "jobTitle": "Web集客コンサルタント",
+    "description": "1980年鹿児島県生まれ。高校卒業後、ブルガリなどのハイブランドで13年間勤務。2011年、ローフードとファスティングの事業で福岡で起業。協会設立を経て、東京・青山に料理教室を開講。現在、株式会社CLANの代表取締役として活動中。"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "availableLanguage": "Japanese"
+  },
+  "sameAs": [],
+  "offers": [
+    {
+      "@type": "Service",
+      "name": "オートウェビナー構築コンサルティング",
+      "description": "UTAGEを活用したオートウェビナーシステムの構築と運用サポート"
+    },
+    {
+      "@type": "Service", 
+      "name": "マーケティング自動化システム",
+      "description": "24時間働き続ける完全自動化されたマーケティングシステムの構築"
+    }
+  ]
+};
+
 export default function Home() {
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <Header />
       <main>
         <HeroSection />
