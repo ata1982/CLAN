@@ -270,10 +270,23 @@ export async function POST(request: NextRequest) {
     );
 
   } catch (error) {
-    // エラーログから機密情報を除外
-    const sanitizedError = error instanceof Error ? 
-      error.message.replace(/password|token|key|secret/gi, '[REDACTED]') : 
-      'Unknown error';
+    // エラーログから機密情報を除外（maskSensitiveData使用）
+    let sanitizedError: string;
+    if (error instanceof Error) {
+      // 機密情報を含む可能性のあるエラーメッセージをマスキング
+      sanitizedError = error.message.replace(/password|token|key|secret/gi, '[REDACTED]');
+      
+      // 環境変数の値が含まれている場合のマスキング
+      const envVars = ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS', 'MAIL_FROM', 'ADMIN_EMAIL'];
+      envVars.forEach(envVar => {
+        const value = process.env[envVar];
+        if (value && sanitizedError.includes(value)) {
+          sanitizedError = sanitizedError.replace(new RegExp(value, 'g'), maskSensitiveData(value));
+        }
+      });
+    } else {
+      sanitizedError = 'Unknown error';
+    }
     
     console.error('Contact form error:', sanitizedError);
     
