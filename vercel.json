@@ -4,7 +4,6 @@
   "outputDirectory": ".next",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "regions": ["nrt1a"],
   "functions": {
     "src/app/api/**/*.ts": {
       "runtime": "nodejs20.x"
