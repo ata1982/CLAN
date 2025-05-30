@@ -1,0 +1,54 @@
+/* Design Tokens - CLAN Project */
+
+:root {
+  /* Color Palette */
+  --color-primary: #007AFF;
+  --color-primary-dark: #5856D6;
+  --color-secondary: #AF52DE;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+  --gradient-hero: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  
+  /* Typography */
+  --font-primary: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Noto Sans JP', system-ui, sans-serif;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+  --spacing-3xl: 5rem;
+  
+  /* Borders */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 122, 255, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 122, 255, 0.3);
+  --shadow-lg: 0 8px 25px rgba(0, 122, 255, 0.4);
+  
+  /* Layout */
+  --container-max-width: 1200px;
+  --container-padding: 2rem;
+  --header-height: 64px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Dark theme variants */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #ffffff;
+    --color-background: #1a1a1a;
+    --color-surface: #2d2d2d;
+  }
+}

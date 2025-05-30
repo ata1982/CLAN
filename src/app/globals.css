@@ -1,6 +1,49 @@
 /* ==========================================
-   Minimal Global Styles
+   Global Styles with Design Tokens
    ========================================== */
+
+/* Design Tokens */
+:root {
+  /* Colors */
+  --color-primary: #007AFF;
+  --color-primary-dark: #0056CC;
+  --color-text: #1D1D1F;
+  --color-text-secondary: #86868B;
+  --color-background: #FFFFFF;
+  --color-background-secondary: #F2F2F7;
+  --color-border: #D1D1D6;
+  --color-accent: #FF3B30;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Typography */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1.0625rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  
+  /* Borders */
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --border-radius-xl: 1rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
 
 /* Reset & Normalize */
 *,
@@ -20,11 +63,11 @@ html {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Noto Sans JP', system-ui, sans-serif;
-  font-size: 1.0625rem;
+  font-size: var(--font-size-base);
   font-weight: 400;
   line-height: 1.5;
-  color: #1D1D1F;
-  background-color: #FFFFFF;
+  color: var(--color-text);
+  background-color: var(--color-background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -37,12 +80,12 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
 }
 
-h1 { font-size: 3rem; }
-h2 { font-size: 2.25rem; }
-h3 { font-size: 1.875rem; }
-h4 { font-size: 1.5rem; }
-h5 { font-size: 1.25rem; }
-h6 { font-size: 1.125rem; }
+h1 { font-size: var(--font-size-5xl); }
+h2 { font-size: var(--font-size-4xl); }
+h3 { font-size: var(--font-size-3xl); }
+h4 { font-size: var(--font-size-2xl); }
+h5 { font-size: var(--font-size-xl); }
+h6 { font-size: var(--font-size-lg); }
 
 p {
   margin-bottom: 1rem;
@@ -50,7 +93,7 @@ p {
 }
 
 a {
-  color: #007AFF;
+  color: var(--color-primary);
   text-decoration: none;
   transition: opacity 0.2s ease;
 }

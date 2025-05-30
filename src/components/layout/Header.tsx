@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import SearchComponent from '@/components/SearchComponent';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import styles from './Header.module.css';
 
 export default function Header() {
@@ -75,10 +74,6 @@ export default function Header() {
                 </svg>
               </button>
               
-              {/* Theme toggle */}
-              <div className={styles.themeToggle}>
-                <ThemeToggle />
-              </div>
               
               {/* CTA Button */}
               <a 

@@ -76,8 +76,16 @@ export default function BlogPage() {
       
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-apple-primary to-apple-primary-dark py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section style={{
+          background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+          padding: '5rem 0'
+        }}>
+          <div style={{
+            maxWidth: '80rem',
+            margin: '0 auto', 
+            padding: '0 2rem',
+            textAlign: 'center'
+          }}>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               ブログ
             </h1>
