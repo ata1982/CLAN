@@ -197,7 +197,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       "name": "オートウェビナー大学CLAN",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://your-domain.com/images/logo.webp"
+        "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com"}/images/logo.webp`
       }
     },
     "articleSection": post.category,
@@ -205,7 +205,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     "keywords": post.tags.join(", "),
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://your-domain.com/blog/${post.slug}`
+      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com"}/blog/${post.slug}`
     }
   };
 

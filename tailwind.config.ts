@@ -8,6 +8,7 @@ const config: Config = {
     './components/**/*.{html,js}',
     './css/**/*.css',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {

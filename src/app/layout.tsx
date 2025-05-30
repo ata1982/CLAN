@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@/components/Analytics";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ['latin'],
@@ -10,6 +12,7 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com'),
   title: "オートウェビナー大学｜マーケティング自動化とウェビナー構築でビジネスを加速",
   description: "オートウェビナー大学は、マーケティング自動化とウェビナー構築であなたのビジネスを加速させるオンラインスクールです。Utageシステム導入やIT導入補助金活用もサポート。",
   keywords: "マーケティング自動化, ウェビナー, UTAGE, オンラインスクール, ビジネス加速",
@@ -18,9 +21,13 @@ export const metadata: Metadata = {
     description: "オートウェビナー大学は、マーケティング自動化とウェビナー構築であなたのビジネスを加速させるオンラインスクールです。",
     type: "website",
     locale: "ja_JP",
+    images: ['/images/hero-pc.webp'],
+    siteName: "オートウェビナー大学"
   },
   twitter: {
     card: "summary_large_image",
+    site: "@your_twitter_handle",
+    creator: "@your_twitter_handle"
   },
   robots: {
     index: true,
@@ -34,9 +41,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={notoSansJP.variable}>
+    <html lang="ja" className={notoSansJP.variable} suppressHydrationWarning>
       <body className={`${notoSansJP.className} antialiased`}>
-        {children}
+        <ThemeProvider defaultTheme="system" storageKey="theme">
+          <Analytics />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

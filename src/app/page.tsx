@@ -7,8 +7,8 @@ const structuredData = {
   "@type": "Organization",
   "name": "オートウェビナー大学CLAN",
   "alternateName": "CLAN",
-  "url": "https://your-domain.com",
-  "logo": "https://your-domain.com/images/logo.webp",
+  "url": process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com",
+  "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com"}/images/logo.webp`,
   "description": "マーケティング自動化とオートウェビナー構築でビジネスを加速させるオンラインスクール",
   "foundingDate": "2011",
   "address": {
