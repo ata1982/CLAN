@@ -51,3 +51,100 @@ next-env.d.ts
 
 # logs
 *.log
+
+# ===========================================
+# 🔒 セキュリティ強化: 機密情報保護
+# ===========================================
+
+# 環境変数ファイル（すべてのバリエーション）
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.environment
+config.json
+secrets.json
+
+# API キー・トークンファイル
+**/api-keys.json
+**/secrets.json
+**/config.json
+**/.secrets
+**/tokens.txt
+**/*-key.pem
+**/*-cert.pem
+**/private-key*
+**/public-key*
+
+# データベース関連
+database.json
+db.json
+*.db
+*.sqlite
+*.sqlite3
+
+# バックアップファイル
+*.bak
+*.backup
+*.tmp
+*.temp
+
+# デプロイ設定
+.vercel
+.now
+.firebase
+.gcloud
+deployment-config.json
+
+# テストデータ
+test-data/
+mock-data/
+fixtures/
+**/test-secrets.*
+
+# ログファイル
+*.log
+logs/
+log/
+
+# 一時ファイル
+tmp/
+temp/
+.cache/
+
+# macOS固有
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Windows固有
+Thumbs.db
+Desktop.ini
+
+# Linux固有
+*~
+
+# 開発ツール設定
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# 証明書・キーファイル
+*.p12
+*.key
+*.crt
+*.cer
+*.pfx
+
+# セキュリティスキャン結果
+security-report.json
+vulnerability-report.json
+
+# パッケージロックファイル（プロジェクトによる）
+# package-lock.json
+# yarn.lock

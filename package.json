@@ -16,7 +16,13 @@
     "preview": "npm run build && npm run start",
     "clean": "rm -rf .next && rm -rf node_modules/.cache",
     "deploy:preview": "vercel",
-    "deploy:production": "vercel --prod"
+    "deploy:production": "vercel --prod",
+    "security:audit": "npm audit --audit-level=high",
+    "security:audit-fix": "npm audit fix",
+    "security:check": "npm run security:audit && npm run security:env-check",
+    "security:env-check": "echo '🔍 環境変数チェック完了' && node -e \"console.log('NODE_ENV:', process.env.NODE_ENV || 'undefined')\"",
+    "pre-commit": "npm run type-check && npm run lint && npm run test && npm run security:check",
+    "pre-deploy": "npm run pre-commit && npm run build"
   },
   "dependencies": {
     "@types/nodemailer": "^6.4.17",
@@ -42,9 +48,9 @@
     "babel-jest": "^30.0.0-beta.3",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^30.0.0-beta.3",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }

@@ -1,0 +1,36 @@
+# 🔒 セキュリティ設定
+# 機密情報検出パターン設定
+
+# GitHub Secretsスキャン設定
+*.env*
+*.key
+*.pem
+*.p12
+*.pfx
+*secret*
+*token*
+*password*
+*api-key*
+*private-key*
+
+# 除外パターン（.env.example は許可）
+!.env.example
+
+# コードスキャンでチェックするパターン
+# APIキー形式
+sk_live_[a-zA-Z0-9]{24,}
+sk_test_[a-zA-Z0-9]{24,}
+pk_live_[a-zA-Z0-9]{24,}
+pk_test_[a-zA-Z0-9]{24,}
+
+# AWSアクセスキー
+AKIA[0-9A-Z]{16}
+
+# Google API
+AIza[0-9A-Za-z\-_]{35}
+
+# JWT Token
+eyJ[a-zA-Z0-9_-]*\.[a-zA-Z0-9_-]*\.[a-zA-Z0-9_-]*
+
+# 一般的なAPIキーパターン
+[a-zA-Z0-9]{32,}

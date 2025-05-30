@@ -13,19 +13,19 @@ jest.mock('next/navigation', () => ({
 describe('Header', () => {
   test('ヘッダーが正しく表示される', () => {
     render(<Header />);
-      // ロゴの確認
+    
+    // ロゴの確認
     expect(screen.getByText('CLAN')).toBeInTheDocument();
-      // ナビゲーションリンクの確認（デスクトップ版のみ）
+    
+    // ナビゲーションリンクの確認（更新されたナビゲーション）
     const navigation = screen.getByRole('navigation', { name: 'メインナビゲーション' });
     expect(navigation).toBeInTheDocument();
     
-    // 最初の「ホーム」リンクのみを確認
-    const homeLinks = screen.getAllByText('ホーム');
-    expect(homeLinks.length).toBeGreaterThan(0);
-      expect(screen.getAllByText('会社概要').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('コース').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('セミナー').length).toBeGreaterThan(0);
+    // 現在のナビゲーションアイテムを確認
+    expect(screen.getAllByText('ホーム').length).toBeGreaterThan(0);
     expect(screen.getAllByText('ブログ').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('まえゆきツール').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('お客様の声').length).toBeGreaterThan(0);
     expect(screen.getAllByText('お問い合わせ').length).toBeGreaterThan(0);
   });
 
@@ -44,33 +44,36 @@ describe('Header', () => {
   });
 
   test('CTAボタンが表示される', () => {
-    render(<Header />);      const ctaButtons = screen.getAllByText('まずは相談する');
+    render(<Header />);
+    
+    const ctaButtons = screen.getAllByText('まずは相談する');
     expect(ctaButtons.length).toBeGreaterThan(0);
   });
 
   test('ナビゲーションリンクが正しいhrefを持つ', () => {
     render(<Header />);
     
-    const homeLink = screen.getByRole('link', { name: 'ホーム' });
-    expect(homeLink).toHaveAttribute('href', '/');
+    // 最初に見つかるリンクを使用（デスクトップ版）
+    const homeLinks = screen.getAllByRole('link', { name: 'ホーム' });
+    expect(homeLinks[0]).toHaveAttribute('href', '/');
     
-    const coursesLink = screen.getByRole('link', { name: 'コース' });
-    expect(coursesLink).toHaveAttribute('href', '/courses');
+    const blogLinks = screen.getAllByRole('link', { name: 'ブログ' });
+    expect(blogLinks[0]).toHaveAttribute('href', '/blog');
     
-    const seminarLink = screen.getByRole('link', { name: 'セミナー' });
-    expect(seminarLink).toHaveAttribute('href', '/seminar');
+    const toolsLinks = screen.getAllByRole('link', { name: 'まえゆきツール' });
+    expect(toolsLinks[0]).toHaveAttribute('href', '/tools');
     
-    const blogLink = screen.getByRole('link', { name: 'ブログ' });
-    expect(blogLink).toHaveAttribute('href', '/blog');
+    const achievementLinks = screen.getAllByRole('link', { name: 'お客様の声' });
+    expect(achievementLinks[0]).toHaveAttribute('href', '/achievement');
     
-    const contactLink = screen.getByRole('link', { name: 'お問い合わせ' });
-    expect(contactLink).toHaveAttribute('href', '/contact');
+    const contactLinks = screen.getAllByRole('link', { name: 'お問い合わせ' });
+    expect(contactLinks[0]).toHaveAttribute('href', '/contact');
   });
 
   test('アクセシビリティ属性が正しく設定される', () => {
     render(<Header />);
     
-    const nav = screen.getByRole('navigation');
+    const nav = screen.getByRole('navigation', { name: 'メインナビゲーション' });
     expect(nav).toHaveAttribute('aria-label', 'メインナビゲーション');
     
     const menuButton = screen.getByLabelText('メニューを開く');

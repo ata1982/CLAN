@@ -48,12 +48,63 @@ function validateContactData(data: unknown): ContactFormData | null {
   };
 }
 
-// メール送信設定
+// 🔒 環境変数の安全な管理
+// セキュリティ強化されたバージョン
+
+// 環境変数の検証と型安全性
+interface EnvConfig {
+  NODE_ENV: string;
+  SMTP_HOST?: string;
+  SMTP_PORT?: string;
+  SMTP_SECURE?: string;
+  SMTP_USER?: string;
+  SMTP_PASS?: string;
+  MAIL_FROM?: string;
+  ADMIN_EMAIL?: string;
+}
+
+// 環境変数の安全な取得
+function getSecureEnvVar(key: keyof EnvConfig, defaultValue?: string): string {
+  const value = process.env[key];
+  if (!value && !defaultValue) {
+    throw new Error(`Missing required environment variable: ${key}`);
+  }
+  return value || defaultValue || '';
+}
+
+// 機密情報のマスキング（ログ出力時用）
+function maskSensitiveData(value: string): string {
+  if (value.length <= 4) return '***';
+  return value.substring(0, 2) + '*'.repeat(value.length - 4) + value.substring(value.length - 2);
+}
+
+// 安全な環境変数チェック
+function validateEnvironment(): boolean {
+  try {
+    if (process.env.NODE_ENV === 'production') {
+      // 本番環境では必須チェック
+      getSecureEnvVar('SMTP_HOST');
+      getSecureEnvVar('SMTP_USER');
+      getSecureEnvVar('SMTP_PASS');
+    }
+    return true;
+  } catch (error) {
+    console.error('Environment validation failed:', error);
+    return false;
+  }
+}
+
+// メール送信設定（セキュリティ強化版）
 async function createTransporter() {
+  // 環境変数の検証
+  if (!validateEnvironment()) {
+    throw new Error('Environment configuration is invalid');
+  }
+
   // 開発環境では Ethereal Email を使用
   if (process.env.NODE_ENV === 'development') {
     const testAccount = await nodemailer.createTestAccount();
-    return nodemailer.createTransport({
+    return nodemailer.createTransporter({
       host: 'smtp.ethereal.email',
       port: 587,
       secure: false,
@@ -64,21 +115,41 @@ async function createTransporter() {
     });
   }
 
-  // 本番環境ではSMTPサーバー設定を使用
-  return nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: process.env.SMTP_SECURE === 'true',
+  // 本番環境ではSMTPサーバー設定を使用（セキュア設定）
+  return nodemailer.createTransporter({
+    host: getSecureEnvVar('SMTP_HOST'),
+    port: parseInt(getSecureEnvVar('SMTP_PORT', '587')),
+    secure: getSecureEnvVar('SMTP_SECURE', 'false') === 'true',
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+      user: getSecureEnvVar('SMTP_USER'),
+      pass: getSecureEnvVar('SMTP_PASS'),
     },
+    // セキュリティ強化設定
+    requireTLS: true,
+    connectionTimeout: 10000,
+    greetingTimeout: 5000,
+    socketTimeout: 10000,
   });
 }
 
-// POSTリクエストハンドラー
+// POSTリクエストハンドラー（セキュリティ強化版）
 export async function POST(request: NextRequest) {
   try {
+    // セキュリティヘッダーの確認
+    const origin = request.headers.get('origin');
+    const allowedOrigins = [
+      'https://clan-roan.vercel.app',
+      'https://your-domain.com',
+      ...(process.env.NODE_ENV === 'development' ? ['http://localhost:3000'] : [])
+    ];
+
+    if (origin && !allowedOrigins.includes(origin)) {
+      return NextResponse.json(
+        { error: 'Unauthorized origin', code: 'UNAUTHORIZED' },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
     
     // データバリデーション
@@ -98,10 +169,10 @@ export async function POST(request: NextRequest) {
     // メールトランスポーター作成
     const transporter = await createTransporter();
 
-    // 管理者向けメール内容
+    // 管理者向けメール内容（機密情報を含まない）
     const adminMailOptions = {
-      from: process.env.MAIL_FROM || 'noreply@autowebinar-university.com',
-      to: process.env.ADMIN_EMAIL || 'admin@autowebinar-university.com',
+      from: getSecureEnvVar('MAIL_FROM', 'noreply@clan-roan.vercel.app'),
+      to: getSecureEnvVar('ADMIN_EMAIL', 'admin@clan-roan.vercel.app'),
       subject: `【お問い合わせ】${subject}`,
       html: `
         <h2>新しいお問い合わせが届きました</h2>
@@ -143,7 +214,7 @@ export async function POST(request: NextRequest) {
 
     // 自動返信メール内容
     const autoReplyOptions = {
-      from: process.env.MAIL_FROM || 'noreply@autowebinar-university.com',
+      from: getSecureEnvVar('MAIL_FROM', 'noreply@clan-roan.vercel.app'),
       to: email,
       subject: `【自動返信】お問い合わせありがとうございます - ${subject}`,
       html: `
@@ -154,7 +225,7 @@ export async function POST(request: NextRequest) {
           
           <p>${name} 様</p>
           
-          <p>この度は、オートウェビナー大学にお問い合わせいただき、誠にありがとうございます。</p>
+          <p>この度は、CLANにお問い合わせいただき、誠にありがとうございます。</p>
           
           <p>以下の内容でお問い合わせを承りました：</p>
           
@@ -166,24 +237,11 @@ export async function POST(request: NextRequest) {
           
           <p>お問い合わせの内容を確認次第、担当者より<strong>2営業日以内</strong>にご連絡いたします。</p>
           
-          <div style="background-color: #e7f3ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="color: #0066cc; margin-top: 0;">お急ぎの場合</h3>
-            <p>緊急のご相談や即日対応をご希望の場合は、下記より無料相談をご予約ください：</p>
-            <p><a href="https://autowebinar-university.com/free-consultation" style="color: #007bff; text-decoration: none;">📞 無料相談の予約はこちら</a></p>
-          </div>
-          
-          <div style="background-color: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="color: #856404; margin-top: 0;">まずは無料セミナーで学んでみませんか？</h3>
-            <p>マーケティングオートメーションの基礎から実践まで学べる無料セミナーを開催しています：</p>
-            <p><a href="https://autowebinar-university.com/free-seminar" style="color: #856404; text-decoration: none;">🎓 無料セミナーの詳細はこちら</a></p>
-          </div>
-          
           <hr style="margin: 30px 0;">
           
           <div style="color: #666; font-size: 14px;">
-            <p><strong>オートウェビナー大学</strong></p>
-            <p>📧 Email: info@autowebinar-university.com</p>
-            <p>🌐 Website: <a href="https://autowebinar-university.com">https://autowebinar-university.com</a></p>
+            <p><strong>CLAN</strong></p>
+            <p>🌐 Website: <a href="https://clan-roan.vercel.app">https://clan-roan.vercel.app</a></p>
             <p>
               本メールは自動送信されています。このメールに直接返信いただいても対応できませんので、
               ご質問等がございましたら改めてお問い合わせフォームからご連絡ください。
@@ -197,10 +255,10 @@ export async function POST(request: NextRequest) {
     await transporter.sendMail(adminMailOptions);
     await transporter.sendMail(autoReplyOptions);
 
-    // 開発環境の場合はプレビューURLを出力
+    // 開発環境でのみプレビューURL出力（本番では機密情報を出力しない）
     if (process.env.NODE_ENV === 'development') {
-      console.log('管理者向けメール:', nodemailer.getTestMessageUrl(await transporter.sendMail(adminMailOptions)));
-      console.log('自動返信メール:', nodemailer.getTestMessageUrl(await transporter.sendMail(autoReplyOptions)));
+      console.log('管理者向けメールプレビュー利用可能');
+      console.log('自動返信メールプレビュー利用可能');
     }
 
     return NextResponse.json(
@@ -212,7 +270,12 @@ export async function POST(request: NextRequest) {
     );
 
   } catch (error) {
-    console.error('Contact form error:', error);
+    // エラーログから機密情報を除外
+    const sanitizedError = error instanceof Error ? 
+      error.message.replace(/password|token|key|secret/gi, '[REDACTED]') : 
+      'Unknown error';
+    
+    console.error('Contact form error:', sanitizedError);
     
     return NextResponse.json(
       { 
