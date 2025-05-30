@@ -104,7 +104,7 @@ async function createTransporter() {
   // 開発環境では Ethereal Email を使用
   if (process.env.NODE_ENV === 'development') {
     const testAccount = await nodemailer.createTestAccount();
-    return nodemailer.createTransporter({
+    return nodemailer.createTransport({
       host: 'smtp.ethereal.email',
       port: 587,
       secure: false,
@@ -116,7 +116,7 @@ async function createTransporter() {
   }
 
   // 本番環境ではSMTPサーバー設定を使用（セキュア設定）
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     host: getSecureEnvVar('SMTP_HOST'),
     port: parseInt(getSecureEnvVar('SMTP_PORT', '587')),
     secure: getSecureEnvVar('SMTP_SECURE', 'false') === 'true',
