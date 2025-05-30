@@ -1,6 +1,37 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
+
+@theme {
+  --font-family-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Noto Sans JP', system-ui, sans-serif;
+  
+  --color-apple-blue: #007AFF;
+  --color-apple-blue-light: #5AC8FA;
+  --color-apple-blue-dark: #0051D5;
+  --color-apple-gray: #8E8E93;
+  --color-apple-gray-2: #AEAEB2;
+  --color-apple-gray-3: #C7C7CC;
+  --color-apple-gray-4: #D1D1D6;
+  --color-apple-gray-5: #E5E5EA;
+  --color-apple-gray-6: #F2F2F7;
+  --color-apple-primary: #007AFF;
+  --color-apple-primary-dark: #0051D5;
+  
+  --color-text-primary: #1D1D1F;
+  --color-text-secondary: #86868B;
+  --color-text-tertiary: #98989D;
+  
+  --animate-fade-in-up: fade-in-up 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 /**
  * Unified Apple Design System
