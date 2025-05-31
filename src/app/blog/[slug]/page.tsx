@@ -34,7 +34,7 @@ const blogPosts = [
       <h3>まとめ</h3>
       <p>マーケティング自動化は、現代のデジタルマーケティングにおいて必須のツールとなっています。適切に導入・運用することで、ビジネスの成長を大きく加速させることができます。</p>
     `,
-    image: "/assets/images/blog-marketing-automation.webp",
+    image: "/images/blog-marketing-automation.webp",
     category: "マーケティング",
     date: "2024-12-15",
     readTime: "5分",
@@ -43,7 +43,7 @@ const blogPosts = [
     author: {
       name: "前田 由紀",
       bio: "マーケティングコンサルタント・オートウェビナー大学代表",
-      image: "/assets/images/instructor-maeda.webp"
+      image: "/images/profile-owner.webp"
     }
   },
   {
@@ -78,7 +78,7 @@ const blogPosts = [
       <h3>まとめ</h3>
       <p>UTAGEシステムは、ウェビナーマーケティングを成功させるための強力なツールです。適切な導入と運用により、ビジネスの成長を大きく加速させることができます。</p>
     `,
-    image: "/assets/images/blog-utage-intro.webp",
+    image: "/images/blog-utage-intro.webp",
     category: "UTAGE",
     date: "2024-12-10",
     readTime: "8分",
@@ -87,7 +87,7 @@ const blogPosts = [
     author: {
       name: "前田 由紀",
       bio: "マーケティングコンサルタント・オートウェビナー大学代表",
-      image: "/assets/images/instructor-maeda.webp"
+      image: "/images/profile-owner.webp"
     }
   },
   {
@@ -128,7 +128,7 @@ const blogPosts = [
       <h3>まとめ</h3>
       <p>ビジネス自動化は単なる効率化ツールではなく、企業の競争力向上と持続的成長を実現するための戦略的投資です。適切な計画と実装により、大きな成果を得ることができます。</p>
     `,
-    image: "/assets/images/blog-business-automation.webp",
+    image: "/images/blog-business-automation.webp",
     category: "自動化",
     date: "2024-12-05",
     readTime: "6分",
@@ -137,7 +137,7 @@ const blogPosts = [
     author: {
       name: "前田 由紀",
       bio: "マーケティングコンサルタント・オートウェビナー大学代表",
-      image: "/assets/images/instructor-maeda.webp"
+      image: "/images/profile-owner.webp"
     }
   }
 ];

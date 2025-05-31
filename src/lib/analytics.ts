@@ -49,7 +49,6 @@ class Analytics {
     // クリックイベントの追跡
     this.initializeClickTracking();
 
-    console.log('📊 Analytics initialized', { sessionId: this.sessionId });
   }
 
   private async sendEvent(event: AnalyticsEvent) {
@@ -69,8 +68,8 @@ class Analytics {
         },
         body: JSON.stringify(payload),
       });
-    } catch (error) {
-      console.error('Analytics error:', error);
+    } catch {
+      // Analytics error silently handled
     }
   }
 

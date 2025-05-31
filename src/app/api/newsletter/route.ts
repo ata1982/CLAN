@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { rateLimit, rateLimitConfigs } from '@/lib/rate-limit';
 
 interface NewsletterSubscription {
   email: string;
@@ -13,6 +14,24 @@ const subscribers: NewsletterSubscription[] = [];
 
 export async function POST(request: Request) {
   try {
+    // Rate limiting
+    const rateLimitResult = await rateLimit(request, rateLimitConfigs.newsletter);
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { 
+          error: 'Too many requests. Please try again later.',
+          retryAfter: Math.ceil((rateLimitResult.reset - Date.now()) / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': rateLimitResult.reset.toString(),
+          }
+        }
+      );
+    }
     const data = await request.json();
     const { email, name, interests, source } = data;
 
@@ -45,12 +64,6 @@ export async function POST(request: Request) {
     subscribers.push(subscription);
 
     // 実際の実装では、ここでメール送信サービス（SendGrid、Mailchimp等）に登録
-    console.log('New newsletter subscription:', {
-      email,
-      name,
-      source,
-      timestamp: new Date(subscription.timestamp).toISOString(),
-    });
 
     // ウェルカムメール送信（模擬）
     await sendWelcomeEmail(subscription);
@@ -60,8 +73,7 @@ export async function POST(request: Request) {
       message: '登録が完了しました。確認メールをお送りします。',
     });
 
-  } catch (error) {
-    console.error('Newsletter subscription error:', error);
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -93,8 +105,7 @@ export async function GET(request: Request) {
       hasMore: offset + limit < subscribers.length,
     });
 
-  } catch (error) {
-    console.error('Newsletter GET error:', error);
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -111,7 +122,6 @@ function isValidEmail(email: string): boolean {
 // ウェルカムメール送信（模擬）
 async function sendWelcomeEmail(subscription: NewsletterSubscription) {
   // 実際の実装では、メール送信サービスを使用
-  console.log(`📧 Sending welcome email to ${subscription.email}`);
   
   const emailContent = {
     to: subscription.email,

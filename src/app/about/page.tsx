@@ -158,7 +158,7 @@ export default function AboutPage() {
           </div>
           <div style={{ flex: '1', minWidth: '300px', textAlign: 'center' }}>
             <img 
-              src="/assets/images/concept-autowebinar.webp" 
+              src="/images/hero-pc.webp" 
               alt="自動ウェビナーによる時間と売上の両立"
               style={{ maxWidth: '100%', height: 'auto', borderRadius: '16px' }}
             />
@@ -199,22 +199,22 @@ export default function AboutPage() {
           }}>
             {[
               {
-                icon: '/assets/images/feature-icon1.webp',
+                icon: '🚀',
                 title: '複数ツールの連携が不要',
                 text: 'LP作成、メール配信、決済システム、会員サイト...様々なツールの連携は複雑で時間がかかります。UTAGEは必要な機能がすべて揃った統合プラットフォーム。ツール選びや連携の手間から解放されます。'
               },
               {
-                icon: '/assets/images/feature-icon2.webp',
+                icon: '🌙',
                 title: '寝ている間も売上が上がる',
                 text: 'オートウェビナーシステムは24時間365日稼働し、あなたに代わって見込み客の教育から販売までを自動で行います。時差のある海外からの購入も逃しません。自動化された販売の仕組みがあなたの代わりに働き続けます。'
               },
               {
-                icon: '/assets/images/feature-icon3.webp',
+                icon: '💡',
                 title: 'ITスキル不要',
                 text: '「デジタルマーケティングは難しい...」そんな不安は不要です。私たちのサポートで、専門知識がなくても自分だけのオートウェビナーシステムを構築できます。まずはあなたの専門知識をお聞かせください。'
               },
               {
-                icon: '/assets/images/feature-icon4.webp',
+                icon: '⏰',
                 title: '貴重な自分時間の確保',
                 text: '時間は有限です。オートウェビナーの導入により、問い合わせ対応や営業活動から解放され、クリエイティブな活動や家族との時間など、本当に大切なことに時間を使えるようになります。'
               }
@@ -240,13 +240,10 @@ export default function AboutPage() {
                   borderRadius: '12px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  fontSize: '32px'
                 }}>
-                  <img 
-                    src={feature.icon} 
-                    alt={feature.title}
-                    style={{ width: '32px', height: '32px' }}
-                  />
+                  {feature.icon}
                 </div>
                 <h3 style={{
                   fontSize: '1.25rem',
@@ -283,7 +280,7 @@ export default function AboutPage() {
         }}>
           <div style={{ flex: '1', minWidth: '300px', textAlign: 'center', marginBottom: '40px' }}>
             <img 
-              src="/assets/images/profile-photo.webp" 
+              src="/images/profile-owner.webp" 
               alt="前田 由紀子"
               style={{ 
                 maxWidth: '400px', 
@@ -380,21 +377,21 @@ export default function AboutPage() {
           }}>
             {[
               {
-                image: '/assets/images/service-funnel.webp',
+                image: '/images/service-funnel.webp',
                 title: 'オートウェビナー構築代行',
                 text: '24時間あなたに代わって商品を売り続ける自動販売システムの構築を代行します。コンセプト設計から各種設定、LP制作、動画編集まで。IT補助金対象サービスです。',
                 link: 'https://utage-system.com/p/EcESO02xLLoK',
                 linkText: '詳細を見る'
               },
               {
-                image: '/assets/images/service-lp.webp',
+                image: '/images/service-lp.webp',
                 title: 'ウェビナー用LP制作',
                 text: '集客から成約までを導くランディングページを制作します。あなたの強みやストーリーを魅力的に伝え、ウェビナーへの申し込みを最大化します。',
                 link: '/course/lp.html',
                 linkText: 'Coming Soon'
               },
               {
-                image: '/assets/images/service-video.webp',
+                image: '/images/service-video.webp',
                 title: 'ウェビナー動画制作',
                 text: '視聴者を惹きつけ、説得力のあるウェビナー動画を制作します。あなたのメッセージを効果的に伝え、視聴者の行動を促すための動画編集サービスです。',
                 link: '/course/video.html',

@@ -3,10 +3,7 @@
 import { useReportWebVitals } from 'next/web-vitals';
 
 export function Analytics() {
-  useReportWebVitals((metric) => {
-    // Web Vitalsの測定結果をコンソールに出力
-    console.log('Web Vitals:', metric);
-    
+  useReportWebVitals(() => {
     // プロダクションでは分析サービスに送信
     if (process.env.NODE_ENV === 'production') {
       // Google Analyticsやその他の分析サービスに送信

@@ -1,14 +1,20 @@
 /* Design Tokens - CLAN Project */
 
 :root {
-  /* Color Palette */
-  --color-primary: #007AFF;
-  --color-primary-dark: #5856D6;
-  --color-secondary: #AF52DE;
+  /* Ultra Modern Color Palette */
+  --color-primary: #0A84FF;
+  --color-primary-dark: #007AFF;
+  --color-secondary: #FF2D92;
+  --color-accent: #30D158;
+  --color-warning: #FF9F0A;
+  --color-neon: #00FFFF;
   
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
-  --gradient-hero: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  /* Advanced Gradient System */
+  --gradient-primary: linear-gradient(135deg, #0A84FF 0%, #FF2D92 50%, #30D158 100%);
+  --gradient-hero: linear-gradient(135deg, #000000 0%, #1a0033 25%, #330066 50%, #1a0033 75%, #000000 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  --gradient-neon: linear-gradient(45deg, #00FFFF 0%, #FF2D92 50%, #0A84FF 100%);
+  --gradient-card: linear-gradient(145deg, rgba(10,132,255,0.1) 0%, rgba(255,45,146,0.1) 100%);
   
   /* Typography */
   --font-primary: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Noto Sans JP', system-ui, sans-serif;
@@ -28,20 +34,33 @@
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
   
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 122, 255, 0.2);
-  --shadow-md: 0 4px 16px rgba(0, 122, 255, 0.3);
-  --shadow-lg: 0 8px 25px rgba(0, 122, 255, 0.4);
+  /* 3D & Glassmorphism Shadows */
+  --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.37);
+  --shadow-neon: 0 0 20px rgba(0, 255, 255, 0.5), 0 0 40px rgba(255, 45, 146, 0.3);
+  --shadow-3d: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 80px rgba(10, 132, 255, 0.2);
+  --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 60px rgba(255, 45, 146, 0.1);
+  --shadow-inset: inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.1);
   
   /* Layout */
   --container-max-width: 1200px;
   --container-padding: 2rem;
   --header-height: 64px;
   
-  /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
+  /* Advanced Transitions & Animations */
+  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --transition-elastic: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --transition-morphism: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* 3D Transform Properties */
+  --transform-scale: scale(1.05);
+  --transform-lift: translateY(-10px) scale(1.02);
+  --transform-rotate: rotateY(15deg) rotateX(5deg);
+  
+  /* Backdrop Filters */
+  --blur-glass: blur(20px) saturate(180%);
+  --blur-frost: blur(10px) brightness(1.1);
+  --blur-heavy: blur(40px) contrast(1.2);
 }
 
 /* Dark theme variants */

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "無料相談 | オートウェビナー大学",
     description: "オートウェビナー大学の無料相談ページ。ビジネス自動化の専門家が、あなたの状況に合ったUTAGE活用法を無料でアドバイスします。IT導入補助金の申請サポートも実施中。",
-    images: ["/assets/images/ogp_image_consultation.webp"],
+    images: ["/images/hero-pc.webp"],
     type: "article"
   }
 };

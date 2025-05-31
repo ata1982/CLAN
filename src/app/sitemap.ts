@@ -50,54 +50,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // コースページ
-  const coursePages = [
+  // Additional static pages
+  const additionalPages = [
     {
-      url: `${baseUrl}/courses`,
+      url: `${baseUrl}/owner`,
       lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    // 個別コースページ（実際の実装では動的に生成）
-    'utage-master',
-    'ma-basics',
-    'funnel-construction',
-    'email-marketing',
-    'content-creation',
-  ].map(slug => ({
-    url: `${baseUrl}/courses/${slug}`,
-    lastModified: currentDate,
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  }));
-
-  // セミナーページ
-  const seminarPages = [
-    {
-      url: `${baseUrl}/seminar`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
     },
     {
-      url: `${baseUrl}/free-seminar`,
+      url: `${baseUrl}/tokutei`,
       lastModified: currentDate,
-      changeFrequency: 'daily' as const,
-      priority: 0.9,
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
     },
-    // 個別セミナーページ
-    'lp-creation',
-    'video-editing',
-    'step-mail',
-    'auto-funnel',
-    'youtube-thumbnail',
-    'canva-design',
-  ].map(slug => ({
-    url: `${baseUrl}/seminar/${slug}`,
-    lastModified: currentDate,
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  }));
+    {
+      url: `${baseUrl}/free-consultation`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+  ];
 
   // ブログページ
   const blogPages = [
@@ -121,10 +94,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // Achievement pages
+  const achievementPages = [
+    'customer1',
+    'customer2', 
+    'customer3',
+    'customer4',
+    'customer5',
+  ].map(slug => ({
+    url: `${baseUrl}/achievement/${slug}`,
+    lastModified: currentDate,
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
   return [
     ...staticPages,
-    ...coursePages,
-    ...seminarPages,
+    ...additionalPages,
     ...blogPages,
+    ...achievementPages,
   ];
 }

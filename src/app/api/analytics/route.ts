@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { rateLimit, rateLimitConfigs } from '@/lib/rate-limit';
+import { requireAuth } from '@/lib/auth';
 
 interface AnalyticsEvent {
   event: string;
@@ -15,6 +17,24 @@ const analyticsData: AnalyticsEvent[] = [];
 
 export async function POST(request: Request) {
   try {
+    // Rate limiting
+    const rateLimitResult = await rateLimit(request, rateLimitConfigs.api);
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { 
+          error: 'Too many requests. Please try again later.',
+          retryAfter: Math.ceil((rateLimitResult.reset - Date.now()) / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': rateLimitResult.reset.toString(),
+          }
+        }
+      );
+    }
     const data = await request.json();
     const userAgent = request.headers.get('user-agent') || '';
     
@@ -35,15 +55,9 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log('Analytics event received:', {
-      event: event.event,
-      page: event.page,
-      timestamp: new Date(event.timestamp).toISOString(),
-    });
 
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Analytics API error:', error);
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -51,7 +65,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(request: Request) {
+export const GET = requireAuth(async (request: Request) => {
   try {
     const { searchParams } = new URL(request.url);
     const page = searchParams.get('page');
@@ -77,11 +91,10 @@ export async function GET(request: Request) {
       events: result,
       total: filteredData.length,
     });
-  } catch (error) {
-    console.error('Analytics GET API error:', error);
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
     );
   }
-}
+});

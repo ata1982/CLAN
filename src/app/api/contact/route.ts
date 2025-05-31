@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { rateLimit, rateLimitConfigs } from '@/lib/rate-limit';
 
 // お問い合わせフォームデータの型定義
 interface ContactFormData {
@@ -88,8 +89,7 @@ function validateEnvironment(): boolean {
       getSecureEnvVar('SMTP_PASS');
     }
     return true;
-  } catch (error) {
-    console.error('Environment validation failed:', error);
+  } catch {
     return false;
   }
 }
@@ -135,6 +135,24 @@ async function createTransporter() {
 // POSTリクエストハンドラー（セキュリティ強化版）
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const rateLimitResult = await rateLimit(request, rateLimitConfigs.contact);
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { 
+          error: 'Too many requests. Please try again later.',
+          retryAfter: Math.ceil((rateLimitResult.reset - Date.now()) / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': rateLimitResult.reset.toString(),
+          }
+        }
+      );
+    }
     // セキュリティヘッダーの確認
     const origin = request.headers.get('origin');
     const allowedOrigins = [
@@ -257,8 +275,6 @@ export async function POST(request: NextRequest) {
 
     // 開発環境でのみプレビューURL出力（本番では機密情報を出力しない）
     if (process.env.NODE_ENV === 'development') {
-      console.log('管理者向けメールプレビュー利用可能');
-      console.log('自動返信メールプレビュー利用可能');
     }
 
     return NextResponse.json(
@@ -288,7 +304,6 @@ export async function POST(request: NextRequest) {
       sanitizedError = 'Unknown error';
     }
     
-    console.error('Contact form error:', sanitizedError);
     
     return NextResponse.json(
       { 
