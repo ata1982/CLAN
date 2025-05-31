@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
   
   // パフォーマンス最適化
   experimental: {
-    optimizeCss: true,
+    optimizeCss: false, // crittersエラー回避のため無効化
     optimizeServerReact: true,
   },
   
