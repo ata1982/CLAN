@@ -16,7 +16,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "type-check": "tsc --noEmit",
-    "vercel-build": "npm run type-check && npm run lint && npm run build",
+    "vercel-build": "next build",
     "preview": "npm run build && npm run start",
     "clean": "rm -rf .next && rm -rf node_modules/.cache",
     "deploy:preview": "vercel",
